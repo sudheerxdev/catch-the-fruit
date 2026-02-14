@@ -1,249 +1,104 @@
-🍓 Fruit Catcher Game
-A simple and fun Fruit Catcher game built with HTML, CSS, and JavaScript. Move the basket left and right to catch falling fruits and score as high as possible!
+# Fruit Catcher
 
+A polished browser game built with pure HTML, CSS, and JavaScript. Catch falling fruits, build combos, survive misses, and chase your best score.
 
-🎮 Play Now
-https://sudheerrrrit.github.io/catch-the-fruit/
+## Live Demo
 
-📸 Screenshots
+Play now: https://sudheerxdev.github.io/fruit-catcher/
 
-🍓 Fruit Catcher Game
-A simple and fun Fruit Catcher game built with HTML, CSS, and JavaScript. Move the basket left and right to catch falling fruits and score as high as possible!
+## Features
 
-🔗 Live Demo
-🎮 Play Now : https://sudheerrrrit.github.io/catch-the-fruit/
+- Smooth gameplay loop using `requestAnimationFrame`
+- Progressive difficulty (faster falling speed and spawn rate)
+- Multiple fruit types: apple, banana, orange, strawberry
+- Random spawn positions
+- Score system with combo bonus
+- Lives system with game over flow
+- Start screen, pause/resume, and game over overlay
+- Sound effects for catch, miss, and game over
+- Background music with toggle
+- High score persistence via `localStorage`
+- Particle effects on successful catches
+- Power-up fruits: slow motion and double score
+- Theme toggle (light/dark)
+- Responsive canvas with touch + keyboard controls
 
-📸 Screenshots
+## Controls
 
-<img width="945" height="472" alt="Screenshot 2025-07-18 103851" src="https://github.com/user-attachments/assets/c3d920da-5ffb-4b34-bfb2-8694bd060036" />
+### Desktop
 
+- `Arrow Left` / `A`: Move basket left
+- `Arrow Right` / `D`: Move basket right
+- `P` or `Esc`: Pause / Resume
+- `Enter` / `Space`: Start or restart
 
+### Mobile / Tablet
 
+- Drag or swipe on the game canvas to move the basket
 
+## Screenshots
 
-🍓 Fruit Catcher Game
-A simple and fun Fruit Catcher game built with HTML, CSS, and JavaScript. Move the basket left and right to catch falling fruits and score as high as possible!
+Add screenshots here after running the latest UI build.
 
-🔗 Live Demo
-🎮 Play Now : https://sudheerrrrit.github.io/catch-the-fruit/
-📸 Screenshots
+```md
+![Gameplay](assets/screenshots/gameplay.png)
+![Game Over](assets/screenshots/game-over.png)
+```
 
+## Installation
 
-<img width="945" height="472" alt="Screenshot 2025-07-18 103851" src="https://github.com/user-attachments/assets/4fa684b7-d235-41f1-bda3-a481382f2966" />
+1. Clone the repository:
 
+```bash
+git clone https://github.com/sudheerxdev/fruit-catcher.git
+```
 
+2. Go to the project directory:
 
+```bash
+cd fruit-catcher
+```
 
+3. Open `index.html` in your browser.
 
-🛠️ Tech Stack
-HTML5 – Game layout and structure
+No build tools or package installs are required.
 
-CSS3 – Styling and animations
+## Project Structure
 
-JavaScript (Vanilla) – Game logic and interaction
+```text
+fruit-catcher/
+  index.html
+  style.css
+  script.js
+  assets/
+    images/
+      basket.png
+      apple.png
+      banana.png
+      orange.png
+      strawberry.png
+      heart.png
+      background.png
+    sounds/
+      catch.mp3
+      miss.mp3
+      gameover.mp3
+      music.mp3
+  README.md
+```
 
-Optional: Audio support for background music and effects
+## Technologies Used
 
-🎯 Game Features
-🍎 Random falling fruits
+- HTML5
+- CSS3
+- Vanilla JavaScript (ES6+)
+- Canvas API
+- Web Audio API
 
-🧺 Basket movement with arrow keys
+## License
 
-🧠 Collision detection between basket and fruits
+MIT License
 
-🕹️ Score counter
+## Author
 
-🎵 Sound effects and optional background music
-
-🔄 Restart game on game over
-
-📱 Responsive design for desktop and mobile
-
-🎮 Controls
-⬅️ Left Arrow – Move basket left
-
-➡️ Right Arrow – Move basket right
-
-🗂️ Folder Structure
-php
-Copy
-Edit
-fruit-catcher-game/
-├── index.html         # Main HTML file
-├── style.css          # Stylesheet
-├── script.js          # Game logic
-├── assets/            # Images and audio files
-│   ├── basket.png
-│   ├── apple.png
-│   ├── banana.png
-│   ├── background.jpg
-│   ├── catch.mp3
-│   └── gameover.mp3
-└── README.md          # Project documentation
-🚀 How to Run the Game Locally
-bash
-Copy
-Edit
-git clone https://github.com/your-username/fruit-catcher-game.git
-cd fruit-catcher-game
-📜 License
-This project is licensed under the MIT License.
-Feel free to use, modify, and share it with proper attribution.
-
-👨‍💻 Author 
-Sudheer Yadav
-GitHub: sudheerrrrit
-
-💡 To-Do / Ideas
-🧠 Add increasing speed for difficulty
-
-🥇 Add leaderboard / high score storage using localStorage
-
-🎨 Improve UI with animations or sound toggle
-
-
-
-<img width="945" height="472" alt="Screenshot 2025-07-18 103851" src="https://github.com/user-attachments/assets/5840959b-3a80-4492-a4ad-7e1be7060d51" />
-
-
-
-
-🛠️ Tech Stack
-HTML5 – Game layout and structure
-
-CSS3 – Styling and animations
-
-JavaScript (Vanilla) – Game logic and interaction
-
-Optional: Audio support for background music and effects
-
-🎯 Game Features
-🍎 Random falling fruits
-
-🧺 Basket movement with arrow keys
-
-🧠 Collision detection between basket and fruits
-
-🕹️ Score counter
-
-🎵 Sound effects and optional background music
-
-🔄 Restart game on game over
-
-📱 Responsive design for desktop and mobile
-
-🎮 Controls
-⬅️ Left Arrow – Move basket left
-
-➡️ Right Arrow – Move basket right
-
-🗂️ Folder Structure
-php
-Copy
-Edit
-fruit-catcher-game/
-├── index.html         # Main HTML file
-├── style.css          # Stylesheet
-├── script.js          # Game logic
-├── assets/            # Images and audio files
-│   ├── basket.png
-│   ├── apple.png
-│   ├── banana.png
-│   ├── background.jpg
-│   ├── catch.mp3
-│   └── gameover.mp3
-└── README.md          # Project documentation
-🚀 How to Run the Game Locally
-bash
-Copy
-Edit
-git clone https://github.com/your-username/fruit-catcher-game.git
-cd fruit-catcher-game
-# Then open index.html in your browser
-📜 License
-This project is licensed under the MIT License.
-Feel free to use, modify, and share it with proper attribution.
-
-👨‍💻 Author
-Your Name
-GitHub: @your-username
-
-💡 To-Do / Ideas
-🧠 Add increasing speed for difficulty
-
-🥇 Add leaderboard / high score storage using localStorage
-
-🎨 Improve UI with animations or sound toggle
-
-
-<img width="945" height="472" alt="Screenshot 2025-07-18 103851" src="https://github.com/user-attachments/assets/ba179ab4-8988-4e75-a743-dd9b3e73d8e2" />
-
-
-
-
-🛠️ Tech Stack
-HTML5 – Game layout and structure
-
-CSS3 – Styling and animations
-
-JavaScript (Vanilla) – Game logic and interaction
-
-Optional: Audio support for background music and effects
-
-🎯 Game Features
-🍎 Random falling fruits
-
-🧺 Basket movement with arrow keys
-
-🧠 Collision detection between basket and fruits
-
-🕹️ Score counter
-
-🎵 Sound effects and optional background music
-
-🔄 Restart game on game over
-
-📱 Responsive design for desktop and mobile
-
-🎮 Controls
-⬅️ Left Arrow – Move basket left
-
-➡️ Right Arrow – Move basket right
-
-🗂️ Folder Structure
-php
-Copy
-Edit
-fruit-catcher-game/
-├── index.html         # Main HTML file
-├── style.css          # Stylesheet
-├── script.js          # Game logic
-├── assets/            # Images and audio files
-│   ├── basket.png
-│   ├── apple.png
-│   ├── banana.png
-│   ├── background.jpg
-│   ├── catch.mp3
-│   └── gameover.mp3
-└── README.md          # Project documentation
-🚀 How to Run the Game Locally
-bash
-Copy
-Edit
-git clone https://github.com/your-username/fruit-catcher-game.git
-cd fruit-catcher-game
-# Then open index.html in your browser
-📜 License
-This project is licensed under the MIT License.
-Feel free to use, modify, and share it with proper attribution.
-
-👨‍💻 Author
-Your sudheer yadav 
-GitHub: sudheerrrrit            
-
-💡 To-Do / Ideas
-🧠 Add increasing speed for difficulty
-
-🥇 Add leaderboard / high score storage using localStorage
-
-🎨 Improve UI with animations or sound toggle
+Sudheer Yadav ([sudheerxdev](https://github.com/sudheerxdev))

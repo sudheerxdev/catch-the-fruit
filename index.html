@@ -1,196 +1,95 @@
-<!--
-In this game you need to move the basket right of left across the screen
-using left and right arrow buttons trying to catch as many fruit
-as you can. The fruit are continuously falling from above. Different types of fruit give you
-different score. The order is this (from highest to lowest scoring:)
-melon -> pineapple -> orange -> apple -> banana. The score also depends on the speed
-the fruit is falling at. The faster it is falling, the more score you get.
-The game keeps tracks of your total score, the number of fruit you missed, and how many you caught.
-Upon missing 10 pieces of fruit, the game is over. You can restart the game by pressing ENTER
-on the game over screen. The game also shows the hi score which updates at the game over screen
-if you succeeded to beat it.
-
-The game also uses music and a couple of sound effects.
--->
 <!DOCTYPE html>
-<html>
+<html lang="en" data-theme="light">
 <head>
-    <title>Fruit Catcher</title>
-    <meta charset="UTF-8">
-    <style>
-        canvas {
-            border: 1px solid black;
-            position: absolute;
-            background-color: transparent;
-        }
-    </style>
-    <script>
-    window.onload = function() {
-        var canvas = document.getElementById("canvas");
-        var ctx = canvas.getContext("2d");
-        var back = document.getElementById("backgroundCanvas");
-        var ctxBack = back.getContext("2d");
-
-        var timer, hiscore = 0;
-
-        function preload(src, type) {
-            if (type === 'img') {
-                var i = new Image();
-                i.onerror = function() { console.error("Image load failed:", src); };
-                i.src = src;
-                return i;
-            } else {
-                var a = new Audio();
-                a.onerror = function() { console.error("Audio load failed:", src); };
-                a.src = src;
-                return a;
-            }
-        }
-
-        var background = preload('jungle.jpg', 'img');
-
-        var catchSounds = [];
-        for(var i = 0; i < 5; i++) {
-            catchSounds.push(preload('bleep.wav', 'audio'));
-        }
-
-        var smashSounds = [];
-        for(var i = 0; i < 5; i++) {
-            smashSounds.push(preload('Sarkari Balmu(BhojpuriViedo.in).mp3', 'audio'));
-        }
-
-        var music = preload('Sarkari Balmu(BhojpuriViedo.in).mp3', 'audio');
-        music.loop = true;
-
-        function Player() {
-            this.gameOver = false;
-            this.score = 0;
-            this.fruitsCollected = 0;
-            this.fruitsMissed = 0;
-            this.playerWidth = 150;
-            this.playerHeight = 90;
-            this.playerSpeed = 10;
-            this.x = canvas.width / 2;
-            this.y = canvas.height - this.playerHeight;
-            this.playerImage = preload('basket2.png', 'img');
-
-            this.render = function() {
-                ctx.drawImage(this.playerImage, this.x, this.y);
-            };
-            this.moveLeft = function() {
-                if(this.x > 0) this.x -= this.playerSpeed;
-            };
-            this.moveRight = function() {
-                if(this.x < canvas.width - this.playerWidth)
-                    this.x += this.playerSpeed;
-            };
-        }
-
-        function Fruit() {
-            this.fruitImage = new Image();
-            this.fruitImage.onerror = function() {
-                console.error("Fruit image load failed:", this.src);
-            };
-            this.changeState = function() {
-                this.fruitNumber = Math.floor(Math.random() * 5);
-                this.fruitSpeed = Math.floor(Math.random() * 3 + 1);
-                this.x = Math.random() * (canvas.width - 50);
-                this.y = Math.random() * -canvas.height - 50;
-                this.chooseFruit();
-            };
-            this.chooseFruit = function() {
-                var map = [
-                    ['banana',5,'banana2.png'],
-                    ['apple',10,'apple2.png'],
-                    ['orange',15,'orange2.png'],
-                    ['pineapple',20,'pineapple2.png'],
-                    ['melon',25,'melon2.png']
-                ];
-                var info = map[this.fruitNumber];
-                this.fruitType = info[0];
-                this.fruitScore = info[1] * this.fruitSpeed;
-                this.fruitImage.src = info[2];
-            };
-            this.fall = function() {
-                if(this.y < canvas.height - 50) {
-                    this.y += this.fruitSpeed;
-                } else {
-                    smashSounds[ (++window.smashCounter || (window.smashCounter=0)) % smashSounds.length ].play();
-                    player.fruitsMissed++;
-                    this.changeState();
-                }
-                this.checkIfCaught();
-            };
-            this.checkIfCaught = function() {
-                if(this.y >= player.y && this.x + 50 > player.x && this.x < player.x + player.playerWidth) {
-                    catchSounds[ (++window.catchSoundCounter || (window.catchSoundCounter=0)) % catchSounds.length ].play();
-                    player.score += this.fruitScore;
-                    player.fruitsCollected++;
-                    this.changeState();
-                }
-            };
-            this.render = function() {
-                ctx.drawImage(this.fruitImage, this.x, this.y);
-            };
-            this.changeState();
-        }
-
-        window.addEventListener("keydown", function(e) {
-            if (e.key === "ArrowLeft") player.moveLeft();
-            else if (e.key === "ArrowRight") player.moveRight();
-            else if (e.key === "Enter" && player.gameOver) {
-                main();
-                clearTimeout(timer);
-            }
-        });
-
-        var player, fruits = [], numberOfFruits = 15;
-
-        function main() {
-            ctxBack.font = "bold 23px Helvetica";
-            ctxBack.fillStyle = "white";
-            player = new Player();
-            fruits = [];
-            for(var i = 0; i < numberOfFruits; i++) fruits.push(new Fruit());
-            startGame();
-        }
-
-        function startGame() {
-            updateGame();
-            requestAnimationFrame(drawGame);
-        }
-
-        function updateGame() {
-            music.play();
-            if (player.fruitsMissed >= 10) player.gameOver = true;
-            fruits.forEach(f => f.fall());
-            timer = setTimeout(updateGame, 30);
-        }
-
-        function drawGame() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            ctxBack.clearRect(0,0,back.width,back.height);
-            ctxBack.drawImage(background,0,0);
-            if (!player.gameOver) {
-                player.render();
-                fruits.forEach(f => f.render());
-                ctxBack.fillText("SCORE: " + player.score, 50, 50);
-                ctxBack.fillText("HI SCORE: " + hiscore, 250, 50);
-                ctxBack.fillText("CAUGHT: " + player.fruitsCollected, 500, 50);
-                ctxBack.fillText("MISSED: " + player.fruitsMissed, 780, 50);
-            } else {
-                if (player.score > hiscore) { hiscore = player.score; ctxBack.fillText("NEW HI SCORE: " + hiscore, 362, back.height/2); }
-                ctxBack.fillText("PRESS ENTER TO RESTART", 312, back.height/2 + 50);
-            }
-            requestAnimationFrame(drawGame);
-        }
-
-        main();
-    };
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fruit Catcher is a fast-paced browser game where you catch fruits, build combos, and chase a high score." />
+  <meta name="author" content="Sudheer Yadav" />
+  <title>Fruit Catcher | sudheerxdev</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body style="margin-left:15%; margin-top:3%;">
-    <canvas id="backgroundCanvas" width="1024" height="650"></canvas>
-    <canvas id="canvas" width="1024" height="650"></canvas>
+<body>
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+  <div class="bg-orb orb-c"></div>
+
+  <main class="app">
+    <header class="topbar glass">
+      <h1>Fruit Catcher</h1>
+      <p>Catch fruits, stack combos, survive longer.</p>
+    </header>
+
+    <section class="game-shell">
+      <div class="hud glass">
+        <div class="stat">
+          <span class="label">Score</span>
+          <strong id="scoreValue">0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">High Score</span>
+          <strong id="highScoreValue">0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">Combo</span>
+          <strong id="comboValue">1x</strong>
+        </div>
+        <div class="stat">
+          <span class="label">Power</span>
+          <strong id="powerValue">None</strong>
+        </div>
+        <div class="stat stat-lives">
+          <span class="label">Lives</span>
+          <div id="livesValue" class="lives" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="controls glass">
+        <button id="startBtn" class="primary">Start</button>
+        <button id="pauseBtn" disabled>Pause</button>
+        <button id="soundBtn">SFX: On</button>
+        <button id="musicBtn">Music: On</button>
+        <button id="themeBtn">Theme: Dark</button>
+      </div>
+
+      <div id="canvasWrap" class="canvas-wrap">
+        <canvas id="gameCanvas" aria-label="Fruit Catcher Game" role="img"></canvas>
+
+        <div id="startScreen" class="overlay active">
+          <div class="panel glass">
+            <h2>Ready To Catch?</h2>
+            <p>Move the basket and catch as many fruits as possible.</p>
+            <p>Watch out for misses, each miss costs one life.</p>
+            <button id="overlayStartBtn" class="primary">Play</button>
+          </div>
+        </div>
+
+        <div id="pauseScreen" class="overlay hidden">
+          <div class="panel glass">
+            <h2>Paused</h2>
+            <p>Press P, Escape, or Resume to continue.</p>
+            <button id="resumeBtn" class="primary">Resume</button>
+          </div>
+        </div>
+
+        <div id="gameOverScreen" class="overlay hidden">
+          <div class="panel glass">
+            <h2>Game Over</h2>
+            <p>Final Score: <strong id="finalScoreValue">0</strong></p>
+            <p>Best Score: <strong id="finalBestValue">0</strong></p>
+            <button id="restartBtn" class="primary">Play Again</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="help">
+        Desktop: Arrow Left/Right or A/D to move, P or Escape to pause.
+      </p>
+      <p class="help">
+        Mobile: Drag or swipe the basket.
+      </p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
